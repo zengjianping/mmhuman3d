@@ -5,7 +5,7 @@ from typing import Optional
 import numpy as np
 import torch
 import torch.nn.functional as F
-from mmcv.runner import load_checkpoint
+from mmengine.runner import load_checkpoint
 from torch import Tensor, nn
 
 from mmhuman3d.utils.transforms import (

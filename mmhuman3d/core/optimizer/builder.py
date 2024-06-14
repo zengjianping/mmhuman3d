@@ -1,8 +1,29 @@
 # Copyright (c) OpenMMLab. All rights reserved.
-from mmcv.runner import build_optimizer
-from mmcv.utils import Registry
+from mmengine.registry import Registry, build_from_cfg
+from mmengine.registry import OPTIMIZERS
+from typing import Dict, List
+import copy
 
 OPTIMIZERS = Registry('optimizers')
+OPTIMIZER_BUILDERS = Registry('optimizer builder')
+
+
+def build_optimizer_constructor(cfg: Dict):
+    return build_from_cfg(cfg, OPTIMIZER_BUILDERS)
+
+
+def build_optimizer(model, cfg: Dict):
+    optimizer_cfg = copy.deepcopy(cfg)
+    constructor_type = optimizer_cfg.pop('constructor',
+                                         'DefaultOptimizerConstructor')
+    paramwise_cfg = optimizer_cfg.pop('paramwise_cfg', None)
+    optim_constructor = build_optimizer_constructor(
+        dict(
+            type=constructor_type,
+            optimizer_cfg=optimizer_cfg,
+            paramwise_cfg=paramwise_cfg))
+    optimizer = optim_constructor(model)
+    return optimizer
 
 
 def build_optimizers(model, cfgs):

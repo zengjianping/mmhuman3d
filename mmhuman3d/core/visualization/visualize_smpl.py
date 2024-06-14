@@ -9,7 +9,7 @@ from functools import partial
 from pathlib import Path
 from typing import List, Optional, Tuple, Union
 
-import mmcv
+import mmengine
 import numpy as np
 import torch
 import torch.nn as nn
@@ -854,7 +854,7 @@ def render_smpl(
 
     # write .ply or .obj files
     if mesh_file_path is not None:
-        mmcv.mkdir_or_exist(mesh_file_path)
+        mmengine.utils.mkdir_or_exist(mesh_file_path)
 
         for person_idx in range(meshes.shape[1]):
             mesh_person = meshes[:, person_idx]

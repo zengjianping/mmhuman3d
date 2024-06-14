@@ -8,7 +8,7 @@ import shutil
 from pathlib import Path
 
 import cv2
-import mmcv
+import mmcv, mmengine
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
@@ -89,7 +89,7 @@ def prepare_data_with_mmpose_detection(args, frames_iter):
     pose_results = []
     all_results = []
     for frame_id, img in tqdm(
-            enumerate(mmcv.track_iter_progress(frames_iter))):
+            enumerate(mmengine.utils.track_iter_progress(frames_iter))):
         pose_results_last = pose_results
         mmdet_results = inference_detector(det_model, img)
 
@@ -211,7 +211,7 @@ def prepare_data_with_pifpaf_detection(args, frames_iter):
 
 def main(args):
     # Define model
-    pymafx_config = mmcv.Config.fromfile(args.mesh_reg_config)
+    pymafx_config = mmengine.Config.fromfile(args.mesh_reg_config)
     pymafx_config.model['device'] = args.device
     mesh_model, _ = init_model(
         pymafx_config, args.mesh_reg_checkpoint, device=args.device.lower())

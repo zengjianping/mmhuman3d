@@ -1,6 +1,6 @@
 import argparse
 
-import mmcv
+import mmengine
 import torch
 from demo.pymafx_estimate_smplx import prepare_data_with_pifpaf_detection
 from openpifpaf import decoder as ppdecoder
@@ -74,7 +74,7 @@ def test_pymafx_inference_with_openpifpaf():
     args = _setup_parser()
     args.use_openpifpaf = True
     args.input_path = 'demo/resources'
-    config = mmcv.Config.fromfile(args.mesh_reg_config)
+    config = mmengine.Config.fromfile(args.mesh_reg_config)
     config.model['device'] = args.device
     for bhf_mode, global_mode in [('full_body', True), ('body_hand', False)]:
         config['model']['head']['bhf_mode'] = bhf_mode

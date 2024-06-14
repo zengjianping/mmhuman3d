@@ -7,8 +7,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from mmcv.cnn import build_activation_layer, initialize
-from mmcv.runner.base_module import BaseModule
+from mmcv.cnn import build_activation_layer
+from mmengine.model import initialize
+from mmengine.model import BaseModule
 
 from mmhuman3d.utils.geometry import rot6d_to_rotmat
 

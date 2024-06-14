@@ -8,11 +8,12 @@ from unittest.mock import MagicMock, patch
 import pytest
 import torch
 import torch.nn as nn
-from mmcv.runner import EpochBasedRunner, build_optimizer
-from mmcv.utils import get_logger
+from mmcv.runner import EpochBasedRunner
+from mmhuman3d.core.optimizer import build_optimizer
 from torch.utils.data import DataLoader, Dataset
 
 from mmhuman3d.core.evaluation import DistEvalHook, EvalHook
+from mmhuman3d.utils.logger import get_logger
 
 
 class ExampleDataset(Dataset):

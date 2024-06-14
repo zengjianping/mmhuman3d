@@ -9,7 +9,7 @@ import mmcv
 import numpy as np
 import torch
 import torch.distributed as dist
-from mmcv.runner import get_dist_info
+from mmengine.dist import get_dist_info
 
 from mmhuman3d.core.conventions.keypoints_mapping import (
     convert_kps,

@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.cuda.comm
 import torch.nn as nn
-from mmcv.runner.base_module import BaseModule
+from mmengine.model import BaseModule
 from torch.nn import functional as F
 
 from mmhuman3d.core.conventions.keypoints_mapping import get_flip_pairs

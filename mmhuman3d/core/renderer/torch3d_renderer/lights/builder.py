@@ -1,4 +1,4 @@
-from mmcv.utils import Registry
+from mmengine.registry import Registry
 
 from .lights import AmbientLights, DirectionalLights, PointLights  # noqa:E401
 

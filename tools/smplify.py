@@ -2,7 +2,7 @@ import argparse
 import os
 import time
 
-import mmcv
+import mmengine
 import numpy as np
 import torch
 
@@ -67,7 +67,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    smplify_config = mmcv.Config.fromfile(args.config)
+    smplify_config = mmengine.Config.fromfile(args.config)
     assert smplify_config.body_model.type.lower() in ['smpl', 'smplx']
     assert smplify_config.type.lower() in ['smplify', 'smplifyx']
 

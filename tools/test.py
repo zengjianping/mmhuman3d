@@ -2,15 +2,18 @@ import argparse
 import os
 import os.path as osp
 
-import mmcv
+import mmcv, mmengine
 import torch
-from mmcv import DictAction
-from mmcv.parallel import MMDataParallel, MMDistributedDataParallel
-from mmcv.runner import (
-    get_dist_info,
-    init_dist,
+from mmengine.config import DictAction
+from mmhuman3d.core.parallel.data_parallel import MMDataParallel
+from mmengine.model import MMDistributedDataParallel
+from mmengine.runner import (
     load_checkpoint,
-    wrap_fp16_model,
+    wrap_fp16_model
+)
+from mmengine.dist import (
+    get_dist_info,
+    init_dist
 )
 
 from mmhuman3d.apis import multi_gpu_test, single_gpu_test
@@ -70,7 +73,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    cfg = mmcv.Config.fromfile(args.config)
+    cfg = mmengine.Config.fromfile(args.config)
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
     # set cudnn_benchmark
@@ -121,7 +124,7 @@ def main():
     eval_cfg = cfg.get('evaluation', args.eval_options)
     eval_cfg.update(dict(metric=args.metrics))
     if rank == 0:
-        mmcv.mkdir_or_exist(osp.abspath(args.work_dir))
+        mmengine.utils.mkdir_or_exist(osp.abspath(args.work_dir))
         results = dataset.evaluate(outputs, args.work_dir, **eval_cfg)
         for k, v in results.items():
             print(f'\n{k} : {v:.2f}')

@@ -1,4 +1,4 @@
-from mmcv.utils import Registry
+from mmengine.registry import Registry
 from pytorch3d.renderer import TexturesAtlas, TexturesUV, TexturesVertex
 
 from .textures import TexturesNearest

@@ -1,7 +1,7 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 
-from mmcv.cnn import MODELS as MMCV_MODELS
-from mmcv.utils import Registry
+from mmengine import MODELS as MMCV_MODELS
+from mmengine.registry import Registry
 
 from .cliff_mesh_estimator import CliffImageBodyModelEstimator
 from .expressive_mesh_estimator import SMPLXImageBodyModelEstimator

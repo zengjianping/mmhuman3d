@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Iterable, List, Optional, Union
 
 import cv2
-import mmcv
+import mmengine
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
@@ -231,7 +231,7 @@ class Axes3dJointsRenderer(Axes3dBaseRenderer):
                 self.temp_path = os.path.join(
                     Path(output_path).parent,
                     Path(output_path).name + '_output_temp')
-                mmcv.mkdir_or_exist(self.temp_path)
+                mmengine.utils.mkdir_or_exist(self.temp_path)
                 print('make dir', self.temp_path)
                 self.remove_temp = True
             else:

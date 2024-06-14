@@ -1,7 +1,7 @@
 from typing import Optional, Union
 
 import torch.nn as nn
-from mmcv.runner.base_module import BaseModule
+from mmengine.model import BaseModule
 
 
 class TemporalGRUEncoder(BaseModule):

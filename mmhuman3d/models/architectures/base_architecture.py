@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 import torch
 import torch.distributed as dist
-from mmcv.runner import BaseModule
+from mmengine.model import BaseModule
 
 
 class BaseArchitecture(BaseModule, metaclass=ABCMeta):

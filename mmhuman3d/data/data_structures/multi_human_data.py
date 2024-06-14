@@ -3,7 +3,7 @@ import pickle
 from typing import Any, Union
 
 import numpy as np
-from mmcv.utils import print_log
+from mmengine import print_log
 
 from mmhuman3d.data.data_structures.human_data import HumanData, _HumanData
 from mmhuman3d.utils.path_utils import (

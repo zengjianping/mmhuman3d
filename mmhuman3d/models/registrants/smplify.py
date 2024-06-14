@@ -2,7 +2,7 @@ from typing import List, Tuple, Union
 
 import numpy as np
 import torch
-from mmcv.runner import build_optimizer
+from mmhuman3d.core.optimizer import build_optimizer
 
 from mmhuman3d.core.cameras import build_cameras
 from mmhuman3d.core.conventions.keypoints_mapping import (

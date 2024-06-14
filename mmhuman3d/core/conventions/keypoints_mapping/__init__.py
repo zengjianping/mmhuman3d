@@ -3,7 +3,7 @@ from typing import List, Tuple, Union
 
 import numpy as np
 import torch
-from mmcv.utils import print_log
+from mmengine import print_log
 
 from mmhuman3d.core.conventions.keypoints_mapping import (
     agora,

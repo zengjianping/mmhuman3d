@@ -781,7 +781,7 @@ class ImageBodyModelEstimator(BodyModelEstimator):
         all_preds['vertices'] = pred_vertices.detach().cpu().numpy()
         image_path = []
         for img_meta in img_metas:
-            image_path.append(img_meta['image_path'])
+            image_path.append(img_meta.get('image_path', None))
         all_preds['image_path'] = image_path
         all_preds['image_idx'] = kwargs['sample_idx']
         return all_preds

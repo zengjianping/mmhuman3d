@@ -4,9 +4,9 @@ from functools import partial
 from typing import Optional, Union
 
 import numpy as np
-from mmcv.parallel import collate
-from mmcv.runner import get_dist_info
-from mmcv.utils import Registry, build_from_cfg
+from mmengine.dataset.utils import pseudo_collate
+from mmengine.dist import get_dist_info
+from mmengine.registry import Registry, build_from_cfg
 from torch.utils.data import DataLoader
 from torch.utils.data.dataset import Dataset
 
@@ -102,7 +102,8 @@ def build_dataloader(dataset: Dataset,
         batch_size=batch_size,
         sampler=sampler,
         num_workers=num_workers,
-        collate_fn=partial(collate, samples_per_gpu=samples_per_gpu),
+        #collate_fn=partial(collate, samples_per_gpu=samples_per_gpu),
+        collate_fn=partial(pseudo_collate),
         pin_memory=False,
         shuffle=shuffle,
         worker_init_fn=init_fn,

@@ -1,4 +1,4 @@
-from mmcv.utils import Registry
+from mmengine.registry import Registry
 
 from .base_renderer import BaseRenderer
 from .depth_renderer import DepthRenderer

@@ -1,12 +1,13 @@
 from typing import Dict, Tuple, Union
 
 import cv2
-import mmcv
+import mmcv, mmengine
 import numpy as np
 import torch
-from mmcv.parallel import collate
-from mmcv.runner import load_checkpoint
-from mmcv.utils import print_log
+from mmengine.dataset.utils import pseudo_collate
+from mmengine.dataset.utils import default_collate
+from mmengine.runner import load_checkpoint
+from mmengine import print_log
 
 from mmhuman3d.data.datasets.pipelines import Compose
 from mmhuman3d.models.architectures.builder import build_architecture
@@ -20,7 +21,7 @@ def init_model(config, checkpoint=None, device='cuda:0'):
     """Initialize a model from config file.
 
     Args:
-        config (str or :obj:`mmcv.Config`): Config file path or the config
+        config (str or :obj:`mmengine.Config`): Config file path or the config
             object.
         checkpoint (str, optional): Checkpoint path. If left as None, the model
             will not load any weights.
@@ -30,8 +31,8 @@ def init_model(config, checkpoint=None, device='cuda:0'):
         (nn.Module, None): The constructed extractor model
     """
     if isinstance(config, str):
-        config = mmcv.Config.fromfile(config)
-    elif not isinstance(config, mmcv.Config):
+        config = mmengine.Config.fromfile(config)
+    elif not isinstance(config, mmengine.Config):
         raise TypeError('config must be a filename or Config object, '
                         f'but got {type(config)}')
     config.data.test.test_mode = True
@@ -181,16 +182,17 @@ def inference_image_based_model(
         data = inference_pipeline(data)
         batch_data.append(data)
 
-    batch_data = collate(batch_data, samples_per_gpu=1)
+    #batch_data = collate(batch_data, samples_per_gpu=1)
+    batch_data = default_collate(batch_data)
 
     if next(model.parameters()).is_cuda:
         # scatter not work so just move image to cuda device
         batch_data['img'] = batch_data['img'].to(device)
 
     # get all img_metas of each bounding box
-    batch_data['img_metas'] = [
-        img_metas[0] for img_metas in batch_data['img_metas'].data
-    ]
+    #batch_data['img_metas'] = [
+    #    img_metas[0] for img_metas in batch_data['img_metas'].data
+    #]
 
     # forward the model
     with torch.no_grad():
@@ -266,7 +268,8 @@ def inference_video_based_model(model,
         data = inference_pipeline(data)
         batch_data.append(data)
 
-    batch_data = collate(batch_data, samples_per_gpu=len(batch_data))
+    #batch_data = collate(batch_data, samples_per_gpu=len(batch_data))
+    batch_data = pseudo_collate(batch_data)
 
     if next(model.parameters()).is_cuda:
         # scatter not work so just move image to cuda device

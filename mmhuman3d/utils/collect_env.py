@@ -1,5 +1,5 @@
 from mmcv.utils import collect_env as collect_base_env
-from mmcv.utils import get_git_hash
+from mmengine.utils.version_utils import get_git_hash
 
 import mmhuman3d
 

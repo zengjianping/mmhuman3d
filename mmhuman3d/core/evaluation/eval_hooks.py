@@ -2,8 +2,8 @@
 import tempfile
 import warnings
 
-from mmcv.runner import DistEvalHook as BaseDistEvalHook
-from mmcv.runner import EvalHook as BaseEvalHook
+from .evaluation import DistEvalHook as BaseDistEvalHook
+from .evaluation import EvalHook as BaseEvalHook
 
 MMHUMAN3D_GREATER_KEYS = ['3dpck', 'pa-3dpck', '3dauc', 'pa-3dauc']
 MMHUMAN3D_LESS_KEYS = ['mpjpe', 'pa-mpjpe', 'pve']

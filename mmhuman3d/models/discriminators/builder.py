@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 
-from mmcv.utils import Registry
+from mmengine.registry import Registry
 
 from .pose_discriminator import (
     FullPoseDiscriminator,

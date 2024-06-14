@@ -75,6 +75,7 @@ find_unused_parameters = True
 
 model = dict(
     type='ImageBodyModelEstimator',
+    _scope_ = 'mmhuman3d',
     backbone=dict(
         type='PoseHighResolutionNet',
         extra=hrnet_extra,

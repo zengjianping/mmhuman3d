@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Iterable, Optional, Tuple, Union
 
 import cv2
-import mmcv
+import mmengine
 import numpy as np
 import torch
 from pytorch3d.structures import Meshes
@@ -53,7 +53,7 @@ class SMPLRenderer(BaseRenderer):
                 self.temp_path = osp.join(
                     Path(output_path).parent,
                     Path(output_path).name + '_output_temp')
-                mmcv.mkdir_or_exist(self.temp_path)
+                mmengine.utils.mkdir_or_exist(self.temp_path)
                 print('make dir', self.temp_path)
             else:
                 self.temp_path = output_path

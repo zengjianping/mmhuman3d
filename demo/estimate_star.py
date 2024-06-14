@@ -5,7 +5,7 @@ import warnings
 from argparse import ArgumentParser
 from pathlib import Path
 
-import mmcv
+import mmcv, mmengine
 import numpy as np
 import torch
 
@@ -54,7 +54,7 @@ def get_tracking_result(args, frames_iter, mesh_model, extractor):
     result_list = []
     frame_id_list = []
 
-    for i, frame in enumerate(mmcv.track_iter_progress(frames_iter)):
+    for i, frame in enumerate(mmengine.utils.track_iter_progress(frames_iter)):
         mmtracking_results = inference_mot(tracking_model, frame, frame_id=i)
 
         # keep the person class bounding boxes.
@@ -107,7 +107,7 @@ def get_detection_result(args, frames_iter, mesh_model, extractor):
     frame_id_list = []
     result_list = []
     pre_bbox = None
-    for i, frame in enumerate(mmcv.track_iter_progress(frames_iter)):
+    for i, frame in enumerate(mmengine.utils.track_iter_progress(frames_iter)):
         mmdet_results = inference_detector(person_det_model, frame)
         # keep the person class bounding boxes.
         results = process_mmdet_results(
@@ -189,7 +189,7 @@ def single_person_with_mmdet(args, frames_iter):
         speed_up_frames = (frame_num -
                            1) // speed_up_interval * speed_up_interval
 
-    for i, result in enumerate(mmcv.track_iter_progress(result_list)):
+    for i, result in enumerate(mmengine.utils.track_iter_progress(result_list)):
         frame_id = frame_id_list[i]
         if mesh_model.cfg.model.type == 'VideoBodyModelEstimator':
             if args.speed_up_type:

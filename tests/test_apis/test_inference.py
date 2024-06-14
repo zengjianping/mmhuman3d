@@ -1,4 +1,4 @@
-import mmcv
+import mmengine
 import numpy as np
 import pytest
 import torch
@@ -24,7 +24,7 @@ from mmhuman3d.utils.demo_utils import (
 
 def test_inference_image_based_model():
     device_name = 'cpu'
-    config = mmcv.Config.fromfile('configs/spin/resnet50_spin_pw3d.py')
+    config = mmengine.Config.fromfile('configs/spin/resnet50_spin_pw3d.py')
     config.model.backbone.norm_cfg = dict(type='BN', requires_grad=True)
     mesh_model, _ = init_model(config, None, device=device_name)
 
@@ -43,7 +43,7 @@ def test_inference_image_based_model():
 
 def test_inference_video_based_model():
     device_name = 'cpu'
-    config = mmcv.Config.fromfile('configs/vibe/resnet50_vibe_pw3d.py')
+    config = mmengine.Config.fromfile('configs/vibe/resnet50_vibe_pw3d.py')
     config.extractor.checkpoint = None
     config.extractor.backbone.norm_cfg = dict(type='BN', requires_grad=True)
     mesh_model, extractor = init_model(config, None, device=device_name)
@@ -119,7 +119,7 @@ def test_process_mmtracking_results():
 
 def test_expose_inference_image_based_model():
     device_name = 'cpu'
-    config = mmcv.Config.fromfile('configs/expose/expose.py')
+    config = mmengine.Config.fromfile('configs/expose/expose.py')
     config.model.backbone.norm_cfg = dict(type='BN', requires_grad=True)
     mesh_model, _ = init_model(config, None, device=device_name)
 

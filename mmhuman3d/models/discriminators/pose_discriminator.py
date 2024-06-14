@@ -7,7 +7,7 @@ from abc import abstractmethod
 
 import torch
 import torch.nn as nn
-from mmcv.cnn import normal_init, xavier_init
+from mmengine.model import normal_init, xavier_init
 
 from mmhuman3d.utils.geometry import batch_rodrigues
 

@@ -3,7 +3,7 @@ from collections.abc import Sequence
 import mmcv
 import numpy as np
 import torch
-from mmcv.parallel import DataContainer as DC
+from mmengine.structures import BaseDataElement
 from PIL import Image
 
 from ..builder import PIPELINES
@@ -138,7 +138,7 @@ class Collect(object):
         for key in self.meta_keys:
             if key in results:
                 img_meta[key] = results[key]
-        data['img_metas'] = DC(img_meta, cpu_only=True)
+        data['img_metas'] = BaseDataElement(metainfo=img_meta, cpu_only=True)
         for key in self.keys:
             data[key] = results[key]
         return data

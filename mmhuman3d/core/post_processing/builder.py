@@ -1,4 +1,4 @@
-from mmcv.utils import Registry
+from mmengine.registry import Registry
 
 POST_PROCESSING = Registry('post_processing')
 

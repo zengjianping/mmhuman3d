@@ -6,7 +6,7 @@ from typing import Any, List, Optional, TypeVar, Union, overload
 
 import numpy as np
 import torch
-from mmcv.utils import print_log
+from mmengine import print_log
 
 from mmhuman3d.utils.path_utils import (
     Existence,

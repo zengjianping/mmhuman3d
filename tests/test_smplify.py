@@ -1,4 +1,4 @@
-import mmcv
+import mmengine
 import numpy as np
 import torch
 
@@ -12,7 +12,7 @@ batch_size = 2
 def test_smplify():
     """Test adaptive batch size."""
 
-    smplify_config = dict(mmcv.Config.fromfile('configs/smplify/smplify.py'))
+    smplify_config = dict(mmengine.Config.fromfile('configs/smplify/smplify.py'))
 
     device = torch.device(
         'cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -71,7 +71,7 @@ def test_smplify():
 
 
 def test_smplifyx():
-    smplifyx_config = dict(mmcv.Config.fromfile('configs/smplify/smplifyx.py'))
+    smplifyx_config = dict(mmengine.Config.fromfile('configs/smplify/smplifyx.py'))
 
     device = torch.device(
         'cuda') if torch.cuda.is_available() else torch.device('cpu')

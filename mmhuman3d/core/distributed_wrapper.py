@@ -1,12 +1,13 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import torch
 import torch.nn as nn
-from mmcv.parallel import MODULE_WRAPPERS, MMDistributedDataParallel
-from mmcv.parallel.scatter_gather import scatter_kwargs
+from mmengine.registry import MODEL_WRAPPERS
+from mmengine.model import MMDistributedDataParallel
+from mmhuman3d.core.parallel.scatter_gather import scatter_kwargs
 from torch.cuda._utils import _get_device_index
 
 
-@MODULE_WRAPPERS.register_module()
+@MODEL_WRAPPERS.register_module()
 class DistributedDataParallelWrapper(nn.Module):
     """A DistributedDataParallel wrapper for models in 3D mesh estimation task.
 
@@ -93,7 +94,7 @@ class DistributedDataParallelWrapper(nn.Module):
         Args:
             inputs (Tensor): Input Tensor.
             kwargs (dict): Args for
-                ``mmcv.parallel.scatter_gather.scatter_kwargs``.
+                ``mmhuman3d.core.parallel.scatter_gather.scatter_kwargs``.
             device_ids (int): Device id.
         """
         return scatter_kwargs(inputs, kwargs, device_ids, dim=self.dim)
@@ -104,7 +105,7 @@ class DistributedDataParallelWrapper(nn.Module):
         Args:
             inputs (tuple): Input data.
             kwargs (dict): Args for
-                ``mmcv.parallel.scatter_gather.scatter_kwargs``.
+                ``mmhuman3d.core.parallel.scatter_gather.scatter_kwargs``.
         """
         inputs, kwargs = self.scatter(inputs, kwargs,
                                       [torch.cuda.current_device()])
@@ -116,7 +117,7 @@ class DistributedDataParallelWrapper(nn.Module):
         Args:
             inputs (Tensor): Input Tensor.
             kwargs (dict): Args for
-                ``mmcv.parallel.scatter_gather.scatter_kwargs``.
+                ``mmhuman3d.core.parallel.scatter_gather.scatter_kwargs``.
         """
         inputs, kwargs = self.scatter(inputs, kwargs,
                                       [torch.cuda.current_device()])

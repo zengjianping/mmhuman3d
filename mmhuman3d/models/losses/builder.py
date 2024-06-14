@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 
-from mmcv.utils import Registry
+from mmengine.registry import Registry
 
 from .balanced_mse_loss import BMCLossMD
 from .cross_entropy_loss import CrossEntropyLoss

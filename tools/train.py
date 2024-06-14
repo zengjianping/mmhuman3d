@@ -4,10 +4,10 @@ import os
 import os.path as osp
 import time
 
-import mmcv
+import mmengine
 import torch
-from mmcv import Config, DictAction
-from mmcv.runner import get_dist_info, init_dist
+from mmengine.config import Config, DictAction
+from mmengine.dist import get_dist_info, init_dist
 
 from mmhuman3d import __version__
 from mmhuman3d.apis import set_random_seed, train_model
@@ -95,7 +95,7 @@ def main():
         cfg.gpu_ids = range(world_size)
 
     # create work_dir
-    mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
+    mmengine.utils.mkdir_or_exist(osp.abspath(cfg.work_dir))
     # dump config
     cfg.dump(osp.join(cfg.work_dir, osp.basename(args.config)))
     # init the logger before other steps

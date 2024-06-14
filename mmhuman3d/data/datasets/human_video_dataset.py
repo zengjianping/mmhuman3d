@@ -3,7 +3,7 @@ from typing import Optional, Union
 
 import numpy as np
 import torch
-from mmcv.parallel import DataContainer as DC
+from mmengine.structures import BaseDataElement
 from skimage.util.shape import view_as_windows
 
 from .builder import DATASETS
@@ -162,5 +162,5 @@ class HumanVideoDataset(HumanImageDataset):
             'frame_idx': self.vid_indices[idx],
             'image_path': image_path
         }
-        video_results['img_metas'] = DC(img_metas, cpu_only=True)
+        video_results['img_metas'] = BaseDataElement(img_metas, cpu_only=True)
         return video_results

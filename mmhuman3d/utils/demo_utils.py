@@ -5,9 +5,9 @@ from contextlib import contextmanager
 from functools import partial
 from pathlib import Path
 
-import mmcv
+import mmcv, mmengine
 import numpy as np
-from mmcv import Timer
+from mmengine import Timer
 from scipy import interpolate
 
 from mmhuman3d.core.post_processing import build_post_processing
@@ -346,8 +346,8 @@ def smooth_process(x,
 
     cfg = os.path.join(cfg_base_dir, smooth_type + '.py')
     if isinstance(cfg, str):
-        cfg = mmcv.Config.fromfile(cfg)
-    elif not isinstance(cfg, mmcv.Config):
+        cfg = mmengine.Config.fromfile(cfg)
+    elif not isinstance(cfg, mmengine.Config):
         raise TypeError('config must be a filename or Config object, '
                         f'but got {type(cfg)}')
 
@@ -414,8 +414,8 @@ def speed_up_process(x,
 
     cfg = os.path.join(cfg_base_dir, speed_up_type + '.py')
     if isinstance(cfg, str):
-        cfg = mmcv.Config.fromfile(cfg)
-    elif not isinstance(cfg, mmcv.Config):
+        cfg = mmengine.Config.fromfile(cfg)
+    elif not isinstance(cfg, mmengine.Config):
         raise TypeError('config must be a filename or Config object, '
                         f'but got {type(cfg)}')
     x = x.clone()
@@ -479,8 +479,8 @@ def get_speed_up_interval(speed_up_type,
     ]
     cfg = os.path.join(cfg_base_dir, speed_up_type + '.py')
     if isinstance(cfg, str):
-        cfg = mmcv.Config.fromfile(cfg)
-    elif not isinstance(cfg, mmcv.Config):
+        cfg = mmengine.Config.fromfile(cfg)
+    elif not isinstance(cfg, mmengine.Config):
         raise TypeError('config must be a filename or Config object, '
                         f'but got {type(cfg)}')
 
@@ -580,15 +580,22 @@ def process_mmdet_results(mmdet_results, cat_id=1, bbox_thr=None):
     else:
         det_results = mmdet_results
 
-    bboxes = det_results[cat_id - 1]
+    labels = det_results.pred_instances.labels.cpu()
+    bboxes = det_results.pred_instances.bboxes.cpu()
+    bboxes = bboxes[labels == cat_id - 1]
+    bbox_scores = det_results.pred_instances.scores.cpu()
+    bbox_scores = bbox_scores[labels == cat_id - 1]
 
     person_results = []
     bboxes = np.array(bboxes)
 
-    if bbox_thr is not None:
-        assert bboxes.shape[-1] == 5
-        valid_idx = np.where(bboxes[:, 4] > bbox_thr)[0]
-        bboxes = bboxes[valid_idx]
+    if bbox_thr is None:
+        bbox_thr = -1
+    assert bboxes.shape[-1] == 4
+    valid_idx = np.where(bbox_scores > bbox_thr)[0]
+    bboxes = bboxes[valid_idx]
+    bbox_scores = bbox_scores[valid_idx][..., np.newaxis]
+    bboxes = np.concatenate([bboxes, bbox_scores], axis=-1)
 
     for bbox in bboxes:
         person = {}

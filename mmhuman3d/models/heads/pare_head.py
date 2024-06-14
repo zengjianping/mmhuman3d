@@ -7,7 +7,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from mmcv.runner.base_module import BaseModule
+from mmengine.model import BaseModule
 from torch.nn.modules.utils import _pair
 
 from mmhuman3d.utils.geometry import rot6d_to_rotmat

@@ -8,7 +8,7 @@ from typing import Optional, Union
 import torch
 import torch.distributed as dist
 import torch.nn.functional as F
-from mmcv.runner import get_dist_info
+from mmengine.dist import get_dist_info
 from torch.nn.modules.loss import _Loss
 
 from .utils import weighted_loss

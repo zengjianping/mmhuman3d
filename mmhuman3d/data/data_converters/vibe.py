@@ -2,7 +2,7 @@ import os
 from collections import OrderedDict
 from typing import List
 
-import mmcv
+import mmengine
 import numpy as np
 import torch
 from tqdm import tqdm
@@ -51,7 +51,7 @@ class VibeConverter(BaseModeConverter):
 
     @staticmethod
     def init_model(model_config, ckpt_path, device):
-        config = mmcv.Config.fromfile(model_config)
+        config = mmengine.Config.fromfile(model_config)
         # modify config to support single gpu/cpu
         config.model.backbone.norm_cfg = {'type': 'BN', 'requires_grad': True}
         model = build_architecture(config.model)

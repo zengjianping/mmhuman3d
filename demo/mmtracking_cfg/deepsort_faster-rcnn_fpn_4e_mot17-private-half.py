@@ -1,6 +1,6 @@
 model = dict(
     detector=dict(
-        type='FasterRCNN',
+        type='mmdet.FasterRCNN',
         backbone=dict(
             type='ResNet',
             depth=50,
@@ -124,7 +124,7 @@ model = dict(
             num_stages=4,
             out_indices=(3, ),
             style='pytorch'),
-        neck=dict(type='GlobalAveragePooling', kernel_size=(8, 4), stride=1),
+        neck=dict(type='mmtrack.GlobalAveragePooling', kernel_size=(8, 4), stride=1),
         head=dict(
             type='LinearReIDHead',
             num_fcs=1,

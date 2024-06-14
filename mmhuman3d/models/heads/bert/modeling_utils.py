@@ -21,7 +21,7 @@ import logging
 import os
 from io import open
 
-import mmcv
+import mmengine
 from torch import nn
 
 logger = logging.getLogger(__name__)
@@ -97,7 +97,7 @@ class PretrainedConfig(object):
         else:
             config_file = pretrained_model_name_or_path
         # Load config
-        config = cls.from_dict(mmcv.Config.fromfile(config_file))
+        config = cls.from_dict(mmengine.Config.fromfile(config_file))
 
         # Update config with kwargs if needed
         to_remove = []

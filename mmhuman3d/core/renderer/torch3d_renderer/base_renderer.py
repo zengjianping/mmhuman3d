@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Optional, Tuple, Union
 
 import cv2
-import mmcv
+import mmengine
 import torch
 import torch.nn as nn
 from pytorch3d.renderer import (
@@ -193,7 +193,7 @@ class BaseRenderer(nn.Module):
                     Path(output_path).name + '_output_temp')
             else:
                 self.temp_path = output_path
-            mmcv.mkdir_or_exist(self.temp_path)
+            mmengine.utils.mkdir_or_exist(self.temp_path)
             print('Make dir', self.temp_path)
 
     def _update_resolution(self, cameras, **kwargs):

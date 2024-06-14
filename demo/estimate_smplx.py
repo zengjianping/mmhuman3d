@@ -3,7 +3,7 @@ import os.path as osp
 import shutil
 from argparse import ArgumentParser
 
-import mmcv
+import mmcv, mmengine
 import numpy as np
 import torch
 
@@ -45,7 +45,7 @@ def get_tracking_result(args, frames_iter, mesh_model, extractor):
     result_list = []
     frame_id_list = []
 
-    for i, frame in enumerate(mmcv.track_iter_progress(frames_iter)):
+    for i, frame in enumerate(mmengine.utils.track_iter_progress(frames_iter)):
         mmtracking_results = inference_mot(tracking_model, frame, frame_id=i)
 
         # keep the person class bounding boxes.
@@ -87,7 +87,7 @@ def get_detection_result(args, frames_iter, mesh_model, extractor):
         args.det_config, args.det_checkpoint, device=args.device.lower())
     frame_id_list = []
     result_list = []
-    for i, frame in enumerate(mmcv.track_iter_progress(frames_iter)):
+    for i, frame in enumerate(mmengine.utils.track_iter_progress(frames_iter)):
         mmdet_results = inference_detector(person_det_model, frame)
         # keep the person class bounding boxes.
         results = process_mmdet_results(
@@ -140,7 +140,7 @@ def single_person_with_mmdet(args, frames_iter):
 
     frame_num = len(frame_id_list)
 
-    for i, result in enumerate(mmcv.track_iter_progress(result_list)):
+    for i, result in enumerate(mmengine.utils.track_iter_progress(result_list)):
         frame_id = frame_id_list[i]
         if mesh_model.cfg.model.type == 'SMPLXImageBodyModelEstimator':
             mesh_results = inference_image_based_model(
@@ -267,7 +267,7 @@ def multi_person_with_mmtracking(args, frames_iter):
     bboxes_xyxy = np.zeros([frame_num, max_track_id + 1, 5])
 
     track_ids_lists = []
-    for i, result in enumerate(mmcv.track_iter_progress(result_list)):
+    for i, result in enumerate(mmengine.utils.track_iter_progress(result_list)):
         frame_id = frame_id_list[i]
         if mesh_model.cfg.model.type == 'SMPLXImageBodyModelEstimator':
             mesh_results = inference_image_based_model(
